@@ -1,4 +1,4 @@
-package com.example.container;
+package com.example.image;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
