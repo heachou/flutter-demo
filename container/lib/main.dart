@@ -14,7 +14,15 @@ class MyApp extends StatelessWidget {
             alignment: Alignment.bottomRight, // 下右
             width: 500,
             height: 400,
-            color: Colors.blueGrey,
+            // color: Colors.blueGrey,// 和渐变重复,保留一个
+            decoration: new BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Colors.blueGrey,Colors.cyan,Colors.deepOrange]
+              ),
+              border: Border.all(width: 4,color: Colors.purple)
+            ),
+            padding: const EdgeInsets.fromLTRB(10,20,30,40),
+            margin: const EdgeInsets.all(40),
             child: Text(
               'container widget test',
               textAlign: TextAlign.left,
