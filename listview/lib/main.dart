@@ -15,10 +15,11 @@ class MyApp extends StatelessWidget {
             body: Center(
               child: Container(
                 color: Colors.pinkAccent,
-                // child: MyList(),
-                child: DynamicList(
-                  items:new List<String>.generate(1000, (i)=>"items $i")
-                ),
+                height: 200,
+                child: MyList(),
+                // child: DynamicList(
+                //   items:new List<String>.generate(1000, (i)=>"items $i")
+                // ),
               ),
             )
           )
