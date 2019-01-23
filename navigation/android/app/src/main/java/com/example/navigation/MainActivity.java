@@ -1,4 +1,4 @@
-package com.example.position;
+package com.example.navigation;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

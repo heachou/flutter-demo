@@ -1,4 +1,4 @@
-# position
+# navigation
 
 A new Flutter project.
 
@@ -15,7 +15,7 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.io/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.
 
-
 ### 效果图
 
-![position widget](./screenshots/1.png)
+![第一屏](./screenshots/1.png)
+![第二屏](./screenshots/2.png)
