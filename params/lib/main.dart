@@ -73,7 +73,9 @@ class ProductDetail extends StatelessWidget {
             onPressed: (){
               Navigator.pop(context,'传回来的商品是 ${product.title}');
             },
-          )
+          ),
+          Text('加载本地图片'),
+          Image.asset('images/1.jpeg',width: 200.0,height: 200.0)
         ],
         // child: Text('${product.description}'),
       ),
