@@ -10,22 +10,15 @@ enum ActionItems {
 } 
 
 class NavigationIconView {
-  final String _title;
-  final IconData _icon;
-  final IconData _activeIcon;
   final BottomNavigationBarItem item;
 
   NavigationIconView(
       {Key key, String title, IconData icon, IconData activeIcon})
-      : _title = title,
-        _icon = icon,
-        _activeIcon = activeIcon,
-        item = BottomNavigationBarItem(
-            icon: Icon(icon, color: Color(AppColors.TabIconNormal)),
-            activeIcon: Icon(activeIcon, color: Color(AppColors.TabIconActive)),
+      : item = BottomNavigationBarItem(
+            icon: Icon(icon),
+            activeIcon: Icon(activeIcon),
             title: Text(title,
-                style: TextStyle(
-                    fontSize: 14.0, color: Color(AppColors.TabIconNormal))),
+                style: TextStyle(fontSize: 14.0)),
             backgroundColor: Colors.white);
 }
 
@@ -34,7 +27,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  PageController _pageController;
+  int _currentIndex = 0;
   List<NavigationIconView> _navigationViews;
+  List<Widget> _pages;
 
   void initState() {
     super.initState();
@@ -56,6 +52,13 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: IconData(0xe602, fontFamily: Constants.IconFontFamily),
           activeIcon: IconData(0xe633, fontFamily: Constants.IconFontFamily)),
     ];
+    _pageController = PageController(initialPage: _currentIndex);
+    _pages = [
+      Container(color: Colors.red),
+      Container(color: Colors.blue),
+      Container(color: Colors.yellow),
+      Container(color: Colors.orangeAccent),
+    ];
   }
 
   _buildPopupMenuItem(int iconName,String title){
@@ -67,33 +70,40 @@ class _HomeScreenState extends State<HomeScreen> {
             fontFamily:Constants.IconFontFamily
           ),
           size: 16,
+          color: Color(AppColors.AppBarPopupMenuTextColor),
         ),
         Container(
           padding: const EdgeInsets.only(
             right: 12.0
           ),
         ),
-        Text(title)
+        Text(title,style: TextStyle(
+          color: const Color(AppColors.AppBarPopupMenuTextColor)
+        ),)
       ],
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     final BottomNavigationBar botNavBar = BottomNavigationBar(
+      fixedColor: const Color(AppColors.TabIconActive),
       items: _navigationViews.map((NavigationIconView view) {
         return view.item;
       }).toList(),
-      currentIndex: 0,
+      currentIndex: _currentIndex,
       type: BottomNavigationBarType.fixed,
       onTap: (int index) {
-        print('点击的第 $index 个tab');
+        setState(() {
+         _currentIndex = index;
+         _pageController.animateToPage(_currentIndex,duration: Duration(milliseconds: 200),curve: Curves.easeInOut);
+        });
       },
     );
     return Scaffold(
       appBar: AppBar(
         title: Text('微信'),
+        elevation: 0,//去除阴影
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -143,8 +153,17 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(width: 16.0),
         ],
       ),
-      body: Container(
-        color: Colors.red,
+      body: PageView.builder(
+        itemBuilder: (BuildContext context,int index){
+          return _pages[index];
+        },
+        controller: _pageController,
+        itemCount: _pages.length,
+        onPageChanged: (int index){
+          setState(() {
+           _currentIndex = index;
+          });
+        },
       ),
       bottomNavigationBar: botNavBar,
     );
