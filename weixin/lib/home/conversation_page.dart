@@ -6,12 +6,23 @@ class _ConversationItem extends StatelessWidget {
   const _ConversationItem({Key key, this.conversation})
       : assert(conversation != null),
         super(key: key);
-
   final Conversation conversation;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    // 根据图片的获取方式初始化头像组件
+    Widget avatar;
+    avatar = conversation.isAvatarFromNet() ? Image.network(
+      conversation.avatar,
+      width: Constants.ConversationAvatarSize,
+      height: Constants.ConversationAvatarSize,
+    ) : Image.asset(
+      conversation.avatar,
+      width: Constants.ConversationAvatarSize,
+      height: Constants.ConversationAvatarSize,
+    );
+    // 未读消息角标
+    return Container( 
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         border: Border(
@@ -23,11 +34,7 @@ class _ConversationItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Image.network(
-            conversation.avatar,
-            width: Constants.ConversationAvatarSize,
-            height: Constants.ConversationAvatarSize,
-          ),
+          avatar,
           Container(width: 10.0),
           Expanded(
               child: Column(
